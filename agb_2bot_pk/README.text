@@ -1,0 +1,4 @@
+sudo chmod +x * for executable
+sudo chmod 777 /dev/ttyACM0
+rosrun dog_leg example_can.py
+use  caps lock

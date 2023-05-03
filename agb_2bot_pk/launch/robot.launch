@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <arg name="paused" default="false" />
+  <arg name="use_sim_time" default="true" />
+  <arg name="gui" default="true" />
+  <arg name="headless" default="false" />
+  <arg name="debug" default="false" />
+
+  <!-- We resume the logic in empty_world.launch -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="true" />
+    <arg name="use_sim_time" value="$(arg use_sim_time)" />
+    <arg name="headless" value="$(arg headless)" />
+    <!--arg name="world_name" value="$(find agb_bot_pk)/world/world.world" /-->
+  </include>
+
+
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find agb_bot_pk)/sdf/model.sdf" />
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="use_gui" value="true"/>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" 
+       respawn="true" output="screen">
+    <remap from="/joint_states" to="/agb_description/joint_states" />
+  </node>
+
+  
+  <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-sdf -model agb_bot_pk -param robot_description" />
+
+
+
+  <!-- Transmission of joint -->
+  <transmission name="trans3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_frame_wheel_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor3">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <!-- Transmission of joint -->
+  <transmission name="trans4">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_frame_wheel_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor4">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  
+  <!-- Transmission of joint -->
+  <transmission name="trans5">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_front_wheel_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor5">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <!-- Transmission of joint -->
+  <transmission name="trans6">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_front_wheel_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor6">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  
+</launch>

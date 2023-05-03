@@ -1,0 +1,466 @@
+<?xml version="1.0"?>
+<robot name="AGB_Robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  
+  <!-- ////////////////////////////////////////////////////////////-->
+   <link name="body">
+    <!-- pose and inertial -->
+    <pose>0 0 0 0 0 0</pose>
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://agb_2bot_pk/meshes/Body.dae"/>
+      </geometry>
+    </visual>
+   <inertial>
+        <mass value = "5"/>
+        <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+      </inertial>
+    <collision name="collision_body">
+      <geometry>
+         <mesh filename="package://agb_2bot_pk/meshes/Body.dae"/>
+      </geometry>
+    </collision>
+    </link>
+ 
+  <!-- ///////////////////      Wheels      ///////////////////////   -->
+  <link name="right_front_wheel">
+    <!-- pose and inertial -->
+    <pose>0 0 0 0 0 0</pose>
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://agb_2bot_pk/meshes/wheel.dae"/>
+      </geometry>
+      <material name="Black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+    <inertial>
+        <mass value = "1"/>
+        <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+      </inertial>
+    <!-- body -->
+    <collision name="collision_wheel">
+      <geometry>
+         <mesh filename="package://agb_2bot_pk/meshes/wheel.dae"/>
+      </geometry>
+    </collision>
+  </link>
+  
+ 
+    
+  
+  <joint name="right_front_wheel_joint" type="continuous">
+    <parent link="body"/>
+    <child link="right_front_wheel"/>
+    <origin rpy="0 0 0" xyz="-1  -1.03  0.5"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" velocity="100"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+  <link name="left_front_wheel">
+    <pose>0 0 0 0 0 0</pose>
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://agb_2bot_pk/meshes/wheel.dae"/>
+      </geometry>
+      <material name="Black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+    <inertial>
+        <mass value = "1"/>
+        <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+      </inertial>
+    <!-- body -->
+    <collision name="collision_wheel">
+      <geometry>
+         <mesh filename="package://agb_2bot_pk/meshes/wheel.dae"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="left_front_wheel_joint" type="continuous">
+    <parent link="body"/>
+    <child link="left_front_wheel"/>
+    <origin rpy="0 0 0" xyz="-1  1.088  0.5"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" velocity="100"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+  <link name="left_frame_wheel">
+    <pose>0 0 0 0 0 0</pose>
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://agb_2bot_pk/meshes/Frame.dae"/>
+      </geometry>
+      <material name="Black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+    <inertial>
+        <mass value = "3"/>
+        <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+      </inertial>
+    <collision name="collision_frame">
+      <geometry>
+         <mesh filename="package://agb_2bot_pk/meshes/Frame.dae"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="left_frame_wheel_joint" type="continuous">
+    <parent link="body"/>
+    <child link="left_frame_wheel"/>
+    <origin rpy="0 0 0" xyz="1.6 -1.03  1.21"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="50" velocity="50"/>
+    <dynamics damping="1.0" friction="1.0"/>
+  </joint>
+  
+  <link name="left_back_wheel">
+   <pose>0 0 0 0 0 0</pose>
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://agb_2bot_pk/meshes/wheel.dae"/>
+      </geometry>
+      <material name="Black">
+        <color rgba="1 1 0 1"/>
+      </material>
+    </visual>
+    <inertial>
+        <mass value = "1.2"/>
+        <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+      </inertial>
+    <collision name="collision_wheel">
+      <geometry>
+         <mesh filename="package://agb_2bot_pk/meshes/wheel.dae"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="left_back_wheel_joint" type="continuous">
+    <parent link="left_frame_wheel"/>
+    <child link="left_back_wheel"/>
+    <origin rpy="0 0 0" xyz="0.213 0.00083  -0.7695"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" velocity="100"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+  
+  <link name="right_frame_wheel">
+    <pose>0 0 0 0 0 0</pose>
+     <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://agb_2bot_pk/meshes/Frame.dae"/>
+      </geometry>
+      <material name="Black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+    <inertial>
+        <mass value = "3"/>
+        <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+      </inertial>
+    <collision name="collision_frame">
+      <geometry>
+         <mesh filename="package://agb_2bot_pk/meshes/Frame.dae"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="right_frame_wheel_joint" type="continuous">
+    <parent link="body"/>
+    <child link="right_frame_wheel"/>
+    <origin rpy="0 0 0" xyz="1.6 1.08  1.21"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="50" velocity="50"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+
+  <link name="right_back_wheel">
+    <pose>0 0 0 0 0 0</pose>
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://agb_2bot_pk/meshes/wheel.dae"/>
+      </geometry>
+      <material name="Black">
+        <color rgba="0 1 0 1"/>
+      </material>
+    </visual>
+    <inertial>
+        <mass value = "1.2"/>
+        <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+      </inertial>
+    <collision name="collision_wheel">
+      <geometry>
+         <mesh filename="package://agb_2bot_pk/meshes/wheel.dae"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="right_back_wheel_joint" type="continuous">
+    <parent link="right_frame_wheel"/>
+    <child link="right_back_wheel"/>
+    <origin rpy="0 0 0" xyz="0.213 0.00083  -0.7695"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" velocity="100"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+ <!--######################################################################-->
+ <link name="laser_scan">
+	<visual>
+		<origin xyz="0 0 0" rpy="0 0 0"/>
+		<geometry>
+			<cylinder length="0.2" radius="0.2"/>
+		</geometry>
+		<material name = "blue">
+			 <color rgba="0.0 0.0 0.8 1.0"/>
+		</material>
+	</visual>
+</link> 
+<joint name="laser_base_link" type="fixed">
+	<origin xyz="-1 0  1.75" rpy="0 0 0"/>
+	<parent link="body"/>
+	<child link="laser_scan"/>
+</joint>
+<gazebo reference="laser_scan">
+	<material>Gazebo/Black</material>
+	<turnGravityOff>false</turnGravityOff>
+	<sensor type="ray" name="laser_scan_sensor">
+		<pose> 0 0 1 0 3.14 0 </pose>
+
+		<visualize>true</visualize>
+
+		<update_rate>50.0</update_rate>
+		<ray>
+			<scan>
+				<horizontal>
+					<sample>1000</sample>
+					<resolution>1</resolution>
+					<min_angle>1.57</min_angle>
+					<max_angle>4.71</max_angle>
+				</horizontal>	
+			</scan>
+			<range>
+				<min>0.01</min>
+				<max>7</max>
+				<resolution>0.01</resolution>
+			</range>		
+		</ray>
+	
+		<plugin name="laser_scanner" filename="libgazebo_ros_laser.so">
+			<TopicName>/scan</TopicName>
+			<frameName>laser_scan</frameName>
+		</plugin>
+	</sensor>
+</gazebo>
+ 
+ 
+ <!--######################################################-->
+ <link name="camera_link">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+      <geometry>
+        <cylinder length="0.2" radius="0.2"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="camera_joint" type="fixed">
+    <origin xyz="1.2 0  1.75" rpy="0.0 0.0 0" />
+    <parent link="body" />
+    <child link="camera_link" />
+  </joint>
+
+  <gazebo reference="camera_link">
+    <sensor type="camera" name="camera1">
+      <update_rate>30.0</update_rate>
+      <camera name="head">
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image>
+          <width>800</width>
+          <height>800</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+      </camera>
+      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>50.0</updateRate>
+        <cameraName>agb_2bot_pk/camera1</cameraName>
+        <imageTopicName>image_raw</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <frameName>camera_link</frameName>
+        <hackBaseline>0.07</hackBaseline>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="camera_link">
+    <material>Gazebo/Green</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  
+  <!--####################3-->
+  
+ <transmission name="right_back_wheel_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="$right_back_wheel_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="right_back_wheel_joint">
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      </joint>
+ </transmission>
+ <transmission name="left_back_wheel_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="left_back_wheel_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="left_back_wheel_joint">
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      </joint>
+ </transmission>
+ <transmission name="right_frame_wheel_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="right_frame_wheel_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="right_frame_wheel_joint">
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      </joint>
+ </transmission>
+ <transmission name="left_frame_wheel_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="left_frame_wheel_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="left_frame_wheel_joint">
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      </joint>
+ </transmission>
+ 
+ <transmission name="right_front_wheel_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="$right_front_wheel_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="right_front_wheel_joint">
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      </joint>
+ </transmission>
+ <transmission name="left_front_wheel_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="left_front_wheel_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="left_front_wheel_joint">
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      </joint>
+ </transmission>
+
+
+<gazebo reference ="left_frame_wheel">
+    <mu1 value="200.0"/>
+    <mu2 value="100.0"/>
+    <kp value="10000000.0"/>
+    <kd value= "1.0"/>
+    <material>Gazebo/Red</material>
+</gazebo>
+<gazebo reference ="right_frame_wheel">
+    <mu1 value="200.0"/>
+    <mu2 value="100.0"/>
+    <kp value="10000000.0"/>
+    <kd value= "1.0"/>
+    <material>Gazebo/Red</material>
+</gazebo>
+<gazebo reference ="right_back_wheel">
+    <mu1 value="200.0"/>
+    <mu2 value="100.0"/>
+    <kp value="10000000.0"/>
+    <kd value= "1.0"/>
+    <material>Gazebo/Blue</material>
+</gazebo>
+<gazebo reference ="left_back_wheel">
+    <mu1 value="200.0"/>
+    <mu2 value="100.0"/>
+    <kp value="10000000.0"/>
+    <kd value= "1.0"/>
+    <material>Gazebo/Blue</material>
+</gazebo>
+<gazebo reference ="body">
+    
+    <material>Gazebo/White</material>
+</gazebo>
+<gazebo reference ="left_front_wheel">
+    
+    <material>Gazebo/Blue</material>
+</gazebo>
+<gazebo reference ="right_front_wheel">
+    
+    <material>Gazebo/Blue</material>
+</gazebo>
+
+
+<!-- ros_control plugin-->
+
+<!--gazebo>
+  <plugin name="gazebo_ros_control" filename= "libgazebo_ros_control.so">
+   <robotNamespace>/</robotNamespace>
+  </plugin>
+</gazebo-->
+
+<gazebo>
+	<plugin  name="differential_drive_robot" filename="libgazebo_ros_diff_drive.so">
+		<robotNamespace>/</robotNamespace>
+		<commandTopic>cmd_vel</commandTopic>
+		<odometryTopic>odom</odometryTopic>
+		<odometryFrame>odom</odometryFrame>
+		<robotBaseFrame>body</robotBaseFrame>
+		<publishWheelTF>true</publishWheelTF>
+		<publishOdomTF>true</publishOdomTF>
+		<publishWheelJointState>true</publishWheelJointState>
+		<legacyMode>true</legacyMode>
+		
+		<wheelSeparation>1</wheelSeparation>
+		<wheelDiameter>1</wheelDiameter>
+		<wheelAcceleration>1.0</wheelAcceleration>
+		<wheelTorque>20.0</wheelTorque>
+		<updateRate>50.0</updateRate>
+		<leftJoint>left_front_wheel_joint</leftJoint>
+		<rightJoint>right_front_wheel_joint</rightJoint>
+	</plugin>
+
+</gazebo>
+</robot>
+
+

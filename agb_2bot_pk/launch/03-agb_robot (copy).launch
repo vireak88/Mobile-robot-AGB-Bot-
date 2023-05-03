@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+<arg name="model" default="$(find agb_2bot_pk)/urdf/agb_robot.urdf.xacro"/>
+<arg name="rvizconfig" default="$(find urdf_tutorial)/rviz/urdf.rviz"/>
+<arg name="rvizspace" default="$(find agb_2bot_pk)/rviz/robot.rviz"/>
+
+<rosparam file="$(find agb_2bot_pk)/YAML/pid.yaml" command="load"/>
+<!-- Launch gazebo -->
+<include file="$(find agb_2bot_pk)/launch/gazebo.launch">
+  <arg name="model" value="$(arg model)"/>
+ </include>
+
+<node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizspace)"/>
+
+<!-- Load joint controller configuration from YAML file to parameter server -->
+
+<rosparam file="$(find agb_2bot_pk)/config/joint_states.yaml" command="load"/>
+
+<rosparam file="$(find agb_2bot_pk)/config/agb_robot.yaml" command="load"/>
+
+
+
+<!-- load the controllers -->
+<node name="robot_arm_controller_spawner" pkg="controller_manager" type="spawner"
+  respawn="true" output="screen" 
+   args="/AGB_Robot/joint_state_controller
+         /AGB_Robot/agb_robot_controller
+        --shutdown-timeout 3"/>
+
+<!-- convert joint states to TF transforms for rviz, etc -->
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+    respawn="true" output="screen">
+</node>
+<node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"/>
+ <!--node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/-->
+ 
+ 
+ <node name="robotcontroller_spawner" pkg="agb_2bot_pk" type="example_can.py"/>
+ 
+ 
+
+
+
+
+<node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+  <param name="default_topic" value="/agb_2bot_pk/agb_robot_controller/cmd_vel"/> 
+</node>
+
+</launch>
+
+ 
+
+

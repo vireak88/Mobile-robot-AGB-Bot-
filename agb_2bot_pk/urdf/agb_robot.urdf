@@ -1,0 +1,218 @@
+<?xml version="1.0" ?>
+<robot name="AGB_Robot">
+
+  <!-- ////////////////////////////////////////////////////////////-->
+  <!-- chassis-->
+  <link name="body">
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://agb_2bot_pk/meshes/Body.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- ///////////////////      Wheels      ///////////////////////   -->
+  <link name="right_front_wheel">
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://agb_2bot_pk/meshes/Back.dae"/>
+      </geometry>
+      <material name="Black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="right_front_wheel_joint" type="continuous">
+    <parent link="body"/>
+    <child link="right_front_wheel"/>
+    <origin rpy="0 0 0" xyz="-1  -1.03  0.5"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" velocity="100"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+  
+  <link name="left_front_wheel">
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://agb_2bot_pk/meshes/Back.dae"/>
+      </geometry>
+      <material name="Black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="left_front_wheel_joint" type="continuous">
+    <parent link="body"/>
+    <child link="left_front_wheel"/>
+    <origin rpy="0 0 0" xyz="-1  1.088  0.5"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" velocity="100"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+  <link name="left_frame_wheel">
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://agb_2bot_pk/meshes/Frame.dae"/>
+      </geometry>
+      <material name="Black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="left_frame_wheel_joint" type="continuous">
+    <parent link="body"/>
+    <child link="left_frame_wheel"/>
+    <origin rpy="0 0 0" xyz="1.6 -1.03  1.21"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" velocity="100"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+  
+  <link name="left_back_wheel">
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://agb_2bot_pk/meshes/wheel.dae"/>
+      </geometry>
+      <material name="Black">
+        <color rgba="1 1 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="left_back_wheel_joint" type="continuous">
+    <parent link="left_frame_wheel"/>
+    <child link="left_back_wheel"/>
+    <origin rpy="0 0 0" xyz="0.213 0.00083  -0.7695"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" velocity="100"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+  
+  <link name="right_frame_wheel">
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://agb_2bot_pk/meshes/Frame.dae"/>
+      </geometry>
+      <material name="Black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="right_frame_wheel_joint" type="continuous">
+    <parent link="body"/>
+    <child link="right_frame_wheel"/>
+    <origin rpy="0 0 0" xyz="1.6 1.08  1.21"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" velocity="100"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+
+  <link name="right_back_wheel">
+    <visual>
+      <origin rpy="0  0  0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://agb_bot_pk/meshes/wheel.dae"/>
+      </geometry>
+      <material name="Black">
+        <color rgba="0 1 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="right_back_wheel_joint" type="continuous">
+    <parent link="right_frame_wheel"/>
+    <child link="right_back_wheel"/>
+    <origin rpy="0 0 0" xyz="0.213 0.00083  -0.7695"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" velocity="100"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+  
+  
+ <!-- Transmission of joint -->
+  <transmission name="trans1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_back_wheel_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <!-- Transmission of joint -->
+  <transmission name="trans2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_back_wheel_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor2">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  
+  <!-- Transmission of joint -->
+  <transmission name="trans3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_frame_wheel_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor3">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <!-- Transmission of joint -->
+  <transmission name="trans4">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_frame_wheel_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor4">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  
+  <!-- Transmission of joint -->
+  <transmission name="trans5">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_front_wheel_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor5">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <!-- Transmission of joint -->
+  <transmission name="trans6">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_front_wheel_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor6">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  
+    
+
+  
+</robot>
+
+
